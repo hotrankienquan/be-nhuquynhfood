@@ -18,7 +18,7 @@ let deleteUserService = async (id) => {
 }
 
 
-export {
+module.exports =  {
   getAllUsersService,
   updateUserService,
   deleteUserService

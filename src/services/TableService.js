@@ -7,6 +7,6 @@ let updateTableService = async (reqBody) => {
   if (rows) return rows;
 }
 
-export {
+module.exports =  {
   updateTableService
 }
