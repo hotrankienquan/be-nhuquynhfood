@@ -1,7 +1,6 @@
 // get the client
 // import mysql from 'mysql2'
 const mysql = require('mysql2/promise');
-// create the connection to database
 require("dotenv").config();
 const pool = mysql.createPool({
 	host: process.env.MYSQL_HOST,
@@ -17,33 +16,5 @@ const pool = mysql.createPool({
 // 	password: "XUO8TmEEXfeyEMo7AeL7",
 // 	port: 3306
 // });
-console.log("check ket noi db thanh cong", pool)
-// const pool = mysql.createPool({
-// 	host: 'localhost',
-// 	user: 'root',
-// 	database: 'food-nhuquynh'
-// });
-// const pool = mysql.createPool({
-//   host: 'localhost',
-//   user: 'kienquan_kienquan',
-//   database: 'kienquan_nodejs'
-// });
 
-// simple query
-// connection.query(
-//   'SELECT * FROM `users`',
-//   function (err, results, fields) {
-//     console.log(results); // results contains rows returned by server
-//     console.log(fields); // fields contains extra meta data about results, if available
-//   }
-// );
-
-// with placeholder
-// connection.query(
-//   'SELECT * FROM `table` WHERE `name` = ? AND `age` > ?',
-//   ['Page', 45],
-//   function (err, results) {
-//     console.log(results);
-//   }
-// );
 module.exports = pool;

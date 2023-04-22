@@ -1,8 +1,12 @@
-import express from "express";
-import bodyParser from "body-parser"; // lay cac tham so tu client
-import cors from 'cors';
+// import express from "express";
+// import bodyParser from "body-parser"; // lay cac tham so tu client
+// import cors from 'cors';
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+// import APIRoute from './route/api'
+const APIRoute = require('./route/api.js');
 
-import APIRoute from './route/api'
 require("dotenv").config();
 
 let app = express();
