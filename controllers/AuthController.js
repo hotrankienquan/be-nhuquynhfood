@@ -112,9 +112,27 @@ let addNewUser = async (req, res) => {
     }
   }
 }
+let handleChangePassword = async (req, res) => {
+  let { old_password, new_password,id } = req.body;
+
+  if (old_password == null && new_password == null) return;
+  let [user] = await pool.execute('select * from user where id = ? limit 1', [id]);
+  if (user[0] && user[0].password == old_password) {
+
+    let [updatedUser] = await pool.execute('update user set password = ? where id = ?', [new_password, id]);
+    if (!updatedUser) return res.status(404).json({errCode:1, errMessage:'error 1'})
+    return res.status(200).json({
+      errCode: 0,
+      errMessage: 'change password successful'
+    })
+  } else {
+    return res.status(404).json({errCode:1, errMessage:'error 2'})
+  }
+}
 module.exports = {
   getAllUsers,getUserNeedUpdate,
   updateUser,
   addNewUser,deleteUser,
   handleSignIn,
+  handleChangePassword
 }

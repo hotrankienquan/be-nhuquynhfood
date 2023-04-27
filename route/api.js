@@ -17,7 +17,8 @@ const APIRoute = (app) => {
   router.post('/add-new-user', AuthController.addNewUser)
   router.post('/sign-in', AuthController.handleSignIn)
   router.get('/manage/get-all-user', AuthController.getAllUsers);
-  router.delete('/manage/delete-user/:id', AuthController.deleteUser)
+  router.delete('/manage/delete-user/:id', AuthController.deleteUser);
+  router.post('/manage/change-password', AuthController.handleChangePassword);
 
 
   router.get('/get-all-table', TableController.getAllTable)
