@@ -1,6 +1,7 @@
 const pool = require('../config/connectDB.js')
 const { v4 } = require("uuid");
-
+var nodemailer = require('nodemailer');
+require("dotenv").config();
 
 let addNewFood = async (req, res) => {
   let { name, price, image } = req.body;
@@ -56,7 +57,7 @@ let deleteFood = async (req, res) => {
 
 let updateInvoice = async (req, res) => {
   const FINISHED = 3
-  let { fk_table, total_price, final_food_arr,arr_id_food,fk_id_invoice} = req.body;
+  let { fk_table, total_price, final_food_arr,arr_id_food,fk_id_invoice, emailUser, firstname} = req.body;
   let convertFinalFood = JSON.stringify(final_food_arr);
   let convertArrFood = JSON.stringify(arr_id_food);
   let [row] = await pool.execute('insert into invoice_detail(fk_id_tablefood,fk_id_food,fk_id_invoice,total_price,description_order_food) values(?,?,?,?,?)',
@@ -64,6 +65,7 @@ let updateInvoice = async (req, res) => {
   );
   await pool.execute(`update tablefood set status = ${FINISHED} where id = ?`, [fk_table]);
   if (row) {
+    sendEmail(firstname,emailUser)
     res.status(200).json({
       errCode: 0,
       errMessage: 'đặt món thành công'
@@ -79,12 +81,56 @@ let getFoodNeedUpdate = async (req, res) => {
   const [rows] = await pool.execute('select * from food where id = ? limit 1', [req.body.id])
   return res.status(200).json({errCode:0, message: 'ok', data:rows})
 }
+// --nodemailer
 
+
+// var transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'tonystark1404@gmail.com',
+//     pass: 'to@nl1aNh5492'
+//   }
+// });
+
+// var mailOptions = {
+//   from: 'tonystark1404@gmail.com',
+//   to: 'hotrankienquan144@gmail.com',
+//   subject: 'Sending Email using Node.js',
+//   text: 'That was easy!'
+// };
+
+// transporter.sendMail(mailOptions, function(error, info){
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+// }); 
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'hotrankienquan144',
+        pass: 'ekoycfitbaxkfjif'
+    }
+});
+
+
+async function sendEmail(firstname, email_to) {
+    const result = await transporter.sendMail({
+        from: 'hotrankienquan144@gmail.com',
+        to: email_to ||  'tonystark1404@gmail.com',
+        subject: 'Thư từ nhà hàng như quỳnh',
+        html:`<h2>Cảm ơn ${firstname} đã sử dụng dịch vụ nhà hàng như quỳnh food</h2>`
+    });
+
+    
+}
+// ----
 
 let orderFood = async (req, res) => {
   let { name, time_eat, status = 2 } = req.body;
   let [rows] = await pool.execute('insert into invoice_table(id,name,time_eat) values(?,?,?)', [v4(), name, time_eat]);
-
   return res.status(200).json({
     errCode: 0,
     message: 'đặt bàn thành công'

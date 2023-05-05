@@ -2,14 +2,14 @@
 // import bodyParser from "body-parser"; // lay cac tham so tu client
 // import cors from 'cors';
 const express = require('express');
+let app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 // import APIRoute from './route/api'
 const APIRoute = require('./route/api.js');
-
+require('express-async-errors');
 require("dotenv").config();
 
-let app = express();
 // app.use(cors())
 // app.use(cors({
 //   origin: '*'
