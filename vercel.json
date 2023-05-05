@@ -9,7 +9,22 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/index.js",
+      "methods": ["POST","GET"]
     }
-  ]
+  ],
+  "functions": {
+    "controllers/*.js": {
+      "memory": 3008,
+      "maxDuration": 30
+    },
+    "route/*.js": {
+      "memory": 3008,
+      "maxDuration": 30
+    },
+    "index.js": {
+      "memory": 3008,
+      "maxDuration": 30
+    }
+  }
 }
