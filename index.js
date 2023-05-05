@@ -10,7 +10,10 @@ const APIRoute = require('./route/api.js');
 require("dotenv").config();
 
 let app = express();
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+  origin: '*'
+}));
 app.use(function (req, res, next) {
   // cho phép URL_REACT nào đc phép gọi đến api
   // Website you wish to allow to connect
