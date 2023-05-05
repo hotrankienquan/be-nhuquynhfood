@@ -2,16 +2,31 @@ const pool = require('../config/connectDB.js')
 const { v4 } = require("uuid");
 
 
-
 let addNewFood = async (req, res) => {
   let { name, price, image } = req.body;
-  const [rows, fields] = await pool.execute('insert into food(id,name, price,image) values(?,?,?,?)', [v4(), name, price, image]);
+  console.log(req.body);
+
+  const params = [name, price, image];
+  const convertStringParam = params.map((param, i) => param.toString());
+  const [rows, fields] = await pool.execute(
+    "insert into food(name, price,image) values(?,?,?)",
+    convertStringParam
+  );
 
   return res.status(200).json({
-    message: 'ok',
-    data: rows
-  })
-}
+    message: "ok",
+    data: rows,
+  });
+};
+// let addNewFood = async (req, res) => {
+//   let { name, price, image } = req.body;
+//   const [rows, fields] = await pool.execute('insert into food(id,name, price,image) values(?,?,?,?)', [v4(), name, price, image]);
+
+//   return res.status(200).json({
+//     message: 'ok',
+//     data: rows
+//   })
+// }
 let getAllFood = async (req, res) => {
   const [rows, fields] = await pool.execute('select * from food');
   return res.status(200).json({
