@@ -14,7 +14,7 @@ app.use(cors())
 app.use(function (req, res, next) {
   // cho phép URL_REACT nào đc phép gọi đến api
   // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", process.env.URL_REACT);
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   res.setHeader(
     "Access-Control-Allow-Methods",
